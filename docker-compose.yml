@@ -10,27 +10,22 @@ services:
       - db
       - redis
     volumes:
-      - /mnt/docker/pretix/data:/data
-      - /mnt/docker/pretix/conf:/etc/pretix
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=web"
-      - "traefik.frontend.rule=Host:tickets.chaostreff-flensburg.de" 
-      - "traefik.port=80"
+      - ./data:/data
+      - ./conf:/etc/pretix
+    ports:
+      - 80:80
     networks:
       - web
       - stack_network
 
   db:
-    image: mariadb:10
+    image: postgres:15-alpine
     restart: always
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=true 
-      - MYSQL_DATABASE=db
-      - MYSQL_USER=db
-      - MYSQL_PASSWORD=db
+      - POSTGRES_USER=pretix
+      - POSTGRES_PASSWORD=password # CHANGE THIS!
     volumes:
-      - /mnt/docker/pretix/mariadb:/var/lib/mysql
+      - ./postgres:/var/lib/postgresql/data
     networks:
       - stack_network
   

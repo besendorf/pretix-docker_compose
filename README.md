@@ -3,15 +3,16 @@ A full config to run pretix with docker-compose
 
 Create folderstructure
 ```
-mkdir -p /mnt/docker/pretix/data
-mkdir -p /mnt/docker/pretix/conf
-chown -R 15371:15371 /mnt/docker/pretix/ 
-mkdir -p /mnt/docker/pretix/mariadb
+mkdir -p data
+mkdir -p conf
+chown -R 15371:15371 data
+chown -R 15351:15371 conf
+mkdir -p postgres
 ```
 
-Put your config file for the pretix installation to 
+copy example pretix.cfg to conf/pretix.cfg
 ```
-/mnt/docker/pretix/conf/pretix.cfg
+cp pretix.cfg conf/pretix.cfg
 ```
 
 Than run the docker-compose file and create a new cronjob to run the internal pretix jobs.
